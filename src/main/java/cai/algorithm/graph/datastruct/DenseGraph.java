@@ -103,7 +103,7 @@ public class DenseGraph implements Graph {
         }
         return adjV.iterator();
     }
-
+    
     public static void matrixPrint() {
         DenseGraph dg = new DenseGraph(7, true);
         dg.addEdge(1, 3);
@@ -118,6 +118,7 @@ public class DenseGraph implements Graph {
         dg.addEdge(2, 3);
         dg.addEdge(2, 5);
         dg.show();
+        dg.print();
     }
 
 }

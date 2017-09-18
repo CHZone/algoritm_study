@@ -40,6 +40,7 @@ public class BFS {
         q.push(s);
         ord[s] = 0;
         visited[s] = true;
+        // 入队是修改访问标记
         while (!q.isEmpty()) {
             int v = q.pop();
             Iterator<Integer> it = G.adjV(v);

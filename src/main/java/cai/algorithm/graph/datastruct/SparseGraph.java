@@ -2,7 +2,6 @@ package cai.algorithm.graph.datastruct;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,7 @@ public class SparseGraph implements Graph {
     private int n;// 节点数
     private int m; // 边数
     private boolean directed; // 是否有向图
-    private ArrayList[] g;
+    private ArrayList<Integer>[] g;
 
     public SparseGraph(int n, boolean directed) {
         if (n <= 0) {
@@ -41,6 +40,7 @@ public class SparseGraph implements Graph {
         }
 
         g[i].add(j);
+        // i,j不相等时的无向图，添加两条边。
         if (i != j && !directed) {
             g[j].add(i);
         }

@@ -95,6 +95,9 @@ public class IndexMaxHeapRev<T extends Comparable<T>> {
             
         }
         int tmp = indexes[1];
+        // 删除元素
+        reverse[indexes[count]] = 0;
+        // 交换堆顶
         indexes[1] = indexes[count];
         reverse[indexes[1]] = 1;
         count--;
@@ -143,6 +146,14 @@ public class IndexMaxHeapRev<T extends Comparable<T>> {
         return reverse[i+1] != 0;
     }
     
+    public Integer[] getIndexes() {
+        return indexes;
+    }
+
+    public Integer[] getReverse() {
+        return reverse;
+    }
+
     public static void main(String[] args){
         int N = 7;
         Integer[] arr = SortTestHelper.generateRandomArray(N, 0, N);
@@ -151,6 +162,7 @@ public class IndexMaxHeapRev<T extends Comparable<T>> {
         for(int i = 0; i < arr.length; i++){
             imhr1.insert(i, arr[i]);
         }
+//        ???
         IndexMaxHeapRev<Integer> imhr2 = new IndexMaxHeapRev(arr1);
         SortTestHelper.printArray(imhr1.indexes);
         SortTestHelper.printArray(imhr2.indexes);
