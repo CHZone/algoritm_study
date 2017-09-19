@@ -38,10 +38,52 @@ public class IndexMinHeapTest {
         for(int i = 0; i < N; i++){
             imh.insert(i, arr[i]);
         }
+        //Integer[] data = imh.getData();
+        
+        SortTestHelper.printArray(arr);
         for(int i = 0; i<N;i++){
-            System.out.print(imh.extractMin()+",");
+            System.out.print(arr[imh.extractMin()]+",");
+            // 检测Count
             assertEquals(imh.getCount(), N-i-1);
+            // 检测是否依然满足堆的定义
             assertEquals(checkHeap(imh),true);
+            int[] indexes = imh.getIndexes();
+            int[] reverse = imh.getReverse();
+            // 检测每次去除后的index中-1的位置
+            assertEquals(indexes[indexes.length-i-1], -1);
+            //和reverse中的-1的个数。
+            assertEquals(checkReverse(reverse), i+1+1);
         }
     }
+    
+    public static int  checkReverse(int[] arr){
+        int count = 0;
+        for(int i = 0; i< arr.length; i++){
+            if(arr[i]==-1){
+                count++;
+            }
+        }
+        return count;
+    }
+    /**
+     * 检测change
+     */
+    @Test
+    public void testChange(){
+        int N = 7;
+        Integer[] arr = SortTestHelper.generateRandomArray(N, 0, N);
+        IndexMinHeap<Integer> imh = new IndexMinHeap<>(arr.length);
+        for(int i = 0; i< arr.length;i++){
+            imh.insert(i, arr[i]);
+        }
+        for(int i = 0;i<N; i++){
+            int index = (int)(Math.random()*(N-1));
+            int a = (int)(Math.random()*N);
+            imh.change(index, a);
+            assertEquals(checkHeap(imh), true);
+        }
+        
+        
+    }
+    
 }

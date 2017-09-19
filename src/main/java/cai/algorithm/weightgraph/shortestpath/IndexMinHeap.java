@@ -49,22 +49,26 @@ public class IndexMinHeap<T extends Comparable> {
         int ret = indexes[1];
         // 删除堆顶元素
         reverse[indexes[1]] = -1;
-        // indexes[1] = -1;
-        // 移动堆尾元素
-        indexes[1] = indexes[count];
-        reverse[indexes[1]] = 1;
-        indexes[count] = -1;
-        count--;
-        shiftDown(1);
-        return ret-1;
+        indexes[1] = -1;
+        if (count > 1) {
+            // 移动堆尾元素
+            indexes[1] = indexes[count];
+            reverse[indexes[1]] = 1;// 为了这句添加了一个if
+            indexes[count] = -1;
+            count--;// 必须在shiftDown之前。
+            shiftDown(1);
+        }else{
+            count--;
+        }
+        return ret - 1;
     }
 
     public void shiftDown(int k) {
-        if(count == 0){
+        if (count == 0) {
             // count == 0 s是 ，
-            //indexes[1]==-1
+            // indexes[1]==-1
             // 此时reverse[indexes[1]] 会指针越界。
-            return ;
+            return;
         }
         int tmp = indexes[k];
         while (2 * k <= count) {
@@ -84,12 +88,13 @@ public class IndexMinHeap<T extends Comparable> {
         reverse[indexes[k]] = k;
 
     }
-    
-    public void change(int i ,T item){
+
+    public void change(int i, T item) {
         i++;
         data[i] = item;
-        shiftUp(i);
-        shiftDown(i);
+        int k = reverse[i];// 错写成直接对i进行shift操作
+        shiftUp(k);
+        shiftDown(k);
     }
 
     public T[] getData() {
@@ -111,12 +116,12 @@ public class IndexMinHeap<T extends Comparable> {
     public int getCount() {
         return count;
     }
-    
-    public boolean isEmpty(){
+
+    public boolean isEmpty() {
         return count == 0;
     }
-    
-    public boolean contains(int v){
-        return reverse[v]!=-1;
+
+    public boolean contains(int v) {
+        return reverse[v + 1] != -1;// 错写成reverse[v]!=-1
     }
 }

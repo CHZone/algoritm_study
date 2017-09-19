@@ -1,6 +1,5 @@
 package cai.algorithm.weightgraph.shortestpath;
 
-import java.awt.event.WindowEvent;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -27,6 +26,7 @@ public class Dijkstra<Weight extends Number & Comparable> {
     // 从s原点到各点的距离
     private Number[] distTo;
 
+    @SuppressWarnings("unchecked")
     public Dijkstra(WeightedGraph<Weight> g, int s) {
         this.g = g;
         marked = new boolean[g.V()];
@@ -45,23 +45,23 @@ public class Dijkstra<Weight extends Number & Comparable> {
         imh.insert(s, (Weight) distTo[s]);
         while (!imh.isEmpty()) {
             // v的最短路径确定了
-            int v = imh.extractMin();
-            marked[v] = true;
-            Iterator<Edge<Weight>> it = g.adjE(v);
+            int fromVertice = imh.extractMin();
+            marked[fromVertice] = true;
+            Iterator<Edge<Weight>> it = g.adjE(fromVertice);
             while (it.hasNext()) {
                 Edge<Weight> e = it.next();
                 // 经过v的可达的节点
-                int vNext = e.other(v);
-                if (!marked[vNext]) {
-                    if (from[vNext] == null
-                            || distTo[v].doubleValue() + e.wt().doubleValue() < distTo[vNext].doubleValue()) {
-                        distTo[vNext] = distTo[v].doubleValue() + e.wt().doubleValue();
-                        from[vNext] = e;
+                int toVertice = e.other(fromVertice);
+                if (!marked[toVertice]) {
+                    if (from[toVertice] == null || distTo[fromVertice].doubleValue()
+                            + e.wt().doubleValue() < distTo[toVertice].doubleValue()) {
+                        distTo[toVertice] = distTo[fromVertice].doubleValue() + e.wt().doubleValue();
+                        from[toVertice] = e;
 
-                        if (!imh.contains(vNext)) {
-                            imh.change(vNext, (Weight) distTo[vNext]);
+                        if (imh.contains(toVertice)) {
+                            imh.change(toVertice, (Weight) distTo[toVertice]);
                         } else {
-                            imh.insert(vNext, (Weight) distTo[vNext]);
+                            imh.insert(toVertice, (Weight) distTo[toVertice]);
                         }
                     }
 
@@ -101,14 +101,14 @@ public class Dijkstra<Weight extends Number & Comparable> {
             System.out.print(pathList.get(i).v() + "->");
             if (i == pathList.size() - 1) {
                 System.out.println(pathList.get(i).w());
-            } 
+            }
         }
     }
 
     public static void main(String[] args) {
         int V = 5;
-        String fileName = "graph/testG1_stp.txt";
-        SparseWeightedGraph<Double> g = new SparseWeightedGraph<>(V, false);
+        String fileName = "graph/testG2_stp.txt";
+        SparseWeightedGraph<Double> g = new SparseWeightedGraph<>(V, true);
         ReadWeightGraph.read(g, fileName);
         Dijkstra<Double> djDijkstra = new Dijkstra<>(g, 0);
         for (int i = 0; i < g.V(); i++) {
