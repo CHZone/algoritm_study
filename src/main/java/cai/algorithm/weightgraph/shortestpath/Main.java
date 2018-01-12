@@ -15,13 +15,5 @@ public class Main {
             System.out.println("Bell Main 0 to "+i+" Weight:"+bell.shotestPathWeight(i));
             bell.showPath(i);
         }
-        
-//        System.out.println("======================");
-//        Dijkstra<Double> dj = new Dijkstra<>(g, 0);
-//        
-//        for(int i = 0; i<g.V();i++){
-//            System.out.println("Dijkstra 0 to "+i+" Wieght:"+dj.shortestPathWeight(i));
-//            dj.showpath(i);
-//        }
     }
 }

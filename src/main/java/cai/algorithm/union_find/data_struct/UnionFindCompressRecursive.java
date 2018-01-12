@@ -5,6 +5,11 @@ import org.slf4j.LoggerFactory;
 
 import cai.algorithm.sort.generate_test_case.SortTestHelper;
 
+/**
+ * @author chzone
+ * 通过rank压缩深度。
+ * find为递归方法
+ */
 public class UnionFindCompressRecursive {
     private final Logger logger = LoggerFactory.getLogger(UnionFindCompressRecursive.class);
     private Integer[] parent;
@@ -24,6 +29,9 @@ public class UnionFindCompressRecursive {
         }
     }
     
+    /**
+     * find 修改为递归
+     */
     private int find(int i){
         if(i==parent[i]){
             return i;

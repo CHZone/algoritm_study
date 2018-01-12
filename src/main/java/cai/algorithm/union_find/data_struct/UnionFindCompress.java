@@ -5,11 +5,18 @@ import org.slf4j.LoggerFactory;
 
 import cai.algorithm.sort.generate_test_case.SortTestHelper;
 
+/**
+ * @author chzone
+ * union时，将rank小的接到rank大的分组中。达到压缩深度的效果。
+ * rank为深度。
+ */
 public class UnionFindCompress {
     private final Logger logger = LoggerFactory.getLogger(UnionFindCompress.class);
+    // 所属分类
     private Integer[] parent;
+    // 所属分类的深度
     private int[] rank;
-
+    // x 本来的值
     private Integer[] x;
 
     public UnionFindCompress(int n) {
